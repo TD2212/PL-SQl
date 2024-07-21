@@ -1,0 +1,9 @@
+DECLARE 
+message varchar(22):='Hello World';\\syntax variable name data type (size of data type):='content';
+Begin
+dbms_output.put_line(message);
+end;
+
+
+Out Put:
+Hello World
