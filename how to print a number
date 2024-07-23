@@ -1,0 +1,8 @@
+DECLARE
+    number1 number(38):=22;\\syntax varibal name datatype(size):='content'
+BEGIN
+    dbms_output.put_line('My number is:'||number1);
+END;
+
+Out Put
+My number is 22
