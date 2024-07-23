@@ -1,0 +1,10 @@
+DECLARE
+    num1 number;
+BEGIN
+    num1:=&num1;/*you can get value from the user using '&' ampersonat*/
+    dbms_output.put_line('My number is:'||num1);
+END;
+
+
+Out Put 
+My number is 'What your type number'
