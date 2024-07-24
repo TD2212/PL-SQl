@@ -1,0 +1,27 @@
+DECLARE
+ num1 number:=12;//already gives a values
+ num2 number:=6;
+ Addi_res number;
+ Diff_res number;
+ multi_res number;
+ divi_res number;
+ Begin
+ Addi_res:=num1+num2;//FOR ADDITION(+)
+ Diff_res:=num1-num2;//FOR DIFFERENCE(-)
+ multi_res:=(num1*num2);//FOR MULTIPLICATION(*)
+ divi_res:=num1/num2;//FOR DIVISION(/)
+ dbms_output.put_line('Addition='||Addi_res);
+ dbms_output.put_line('Difference='||Diff_res);
+ dbms_output.put_line('multiplication='||multi_res);
+ dbms_output.put_line('Division='||divi_res);
+ end;
+
+
+OUT PUT:
+Addition=18
+Difference=6
+Multiplication=72
+Division=2
+
+ 
+ 
