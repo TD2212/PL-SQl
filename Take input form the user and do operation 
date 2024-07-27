@@ -1,0 +1,19 @@
+DECLARE
+ num1 number;
+ num2 number;
+ Addi_res number;
+ Diff_res number;
+ multi_res number;
+ divi_res number;
+ Begin
+num1:=&num1;
+num2:=&num2;
+ Addi_res:=num1+num2;//FOR ADDITION(+)
+ Diff_res:=num1-num2;//FOR DIFFERENCE(-)
+ multi_res:=(num1*num2);//FOR MULTIPLICATION(*)
+ divi_res:=num1/num2;//FOR DIVISION(/)
+ dbms_output.put_line('Addition='||Addi_res);
+ dbms_output.put_line('Difference='||Diff_res);
+ dbms_output.put_line('multiplication='||multi_res);
+ dbms_output.put_line('Division='||divi_res);
+ end;
