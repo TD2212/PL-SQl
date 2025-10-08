@@ -1,0 +1,189 @@
+//For a list view
+ String[] stateName = {"Gujarat","Mharastra","Punjab","Hariyana","Rajasthan","Gujarat","Mharastra","Punjab","Hariyana","Rajasthan","Gujarat","Mharastra","Punjab","Hariyana","Rajasthan","Gujarat","Mharastra","Punjab","Hariyana","Rajasthan"};
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,stateName);
+        lvBinding.lvState.setAdapter(adapter);
+
+        lvBinding.lvState.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String name = String.valueOf(parent.getItemAtPosition(position));
+                Toast.makeText(getApplication(),name,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+//for customadapter.Recycle
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplicationshukan.R;
+
+import java.util.List;
+
+public class StuAdpater extends RecyclerView.Adapter<StuAdpater.ViewHolder> {
+        private List<slist> p;
+    public StuAdpater(List<slist> pe){
+        this.p=pe;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_main5,parent,false);
+
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        slist s = p.get(position);
+        holder.txti.setText(s.sname);
+    }
+
+    @Override
+    public int getItemCount() {
+        return p.size();
+    }
+
+
+   public class ViewHolder extends RecyclerView.ViewHolder {
+
+        AppCompatTextView txti;
+       public ViewHolder(@NonNull View itemView) {
+           super(itemView);
+
+           txti=itemView.findViewById(R.id.txti);
+       }
+   }
+
+}
+//for main activity in rcv
+
+package com.jg.imscit_c;
+
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.jg.imscit_c.databinding.ActivityRecyclerViewBinding;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecyclerViewActivity extends AppCompatActivity {
+
+    ActivityRecyclerViewBinding rBinding;
+
+    CustomAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
+        rBinding = ActivityRecyclerViewBinding.inflate(getLayoutInflater());
+        setContentView(rBinding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        List<UserData> userList = new ArrayList<>();
+
+        userList.add(new UserData("Hello 1","Hey"));
+        userList.add(new UserData("Hello 2","Hey"));
+        userList.add(new UserData("Hello 3","Hey"));
+        userList.add(new UserData("Hello 4","Hey"));
+        userList.add(new UserData("Hello 5","Hey"));
+
+
+        adapter = new CustomAdapter(userList);
+        rBinding.rvUserList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rBinding.rvUserList.setAdapter(adapter);
+
+
+    }
+}
+
+//For shared preference
+package com.jg.imscit_c;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.jg.imscit_c.databinding.ActivitySphomeBinding;
+
+public class SPHomeActivity extends AppCompatActivity {
+
+    ActivitySphomeBinding spHomeBinding;
+
+    SharedPreferences hShared;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
+
+        spHomeBinding = ActivitySphomeBinding.inflate(getLayoutInflater());
+        setContentView(spHomeBinding.getRoot());
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+
+        hShared = getSharedPreferences("STUD_DATA",MODE_PRIVATE);
+        SharedPreferences.Editor editor = hShared.edit();
+
+        spHomeBinding.txtEmail.setText(hShared.getString("EMAIL","not found"));
+
+
+        spHomeBinding.btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                editor.remove("EMAIL");
+                editor.remove("IS_LOGIN");
+                editor.clear();
+                editor.apply();
+                editor.commit();
+
+                finishAffinity(); //  to destroy all activity
+
+                Intent intent;
+                intent = new Intent(getApplication(),SPLoginActivity.class);
+                startActivity(intent);
+                finish(); // to destroy present(single) activity
+
+            }
+        });
+
+    }
+}
